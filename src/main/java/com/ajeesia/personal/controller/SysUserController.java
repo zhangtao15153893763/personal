@@ -1,8 +1,8 @@
 package com.ajeesia.personal.controller;
 
+import com.ajeesia.personal.config.MyRealm;
 import com.ajeesia.personal.entity.SysUser;
 import com.ajeesia.personal.service.SysUserService;
-import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.PublicKey;
 
 /**
  * @Description: java类作用描述
@@ -64,5 +62,17 @@ public class SysUserController {
         }
         return "aa";
 //        return "login";
+    }
+
+    @GetMapping("/setAccount")
+    public void setAccount(){
+        String id = "fadfhbashfabsfasfsa";
+        String userName = "abc";
+        String password = "123456";
+        MyRealm.encrypt(userName,password);
+        SysUser sysUser = new SysUser();
+        sysUser.setPassword(password);
+        sysUser.setUserName(userName);
+        sysUserService.setAccount(sysUser);
     }
 }

@@ -27,4 +27,8 @@ public class SysUserService {
     public SysUser findById(String userName){
         return sysUserMapper.findByName(userName);
     }
+
+    public int setAccount(SysUser sysUser){
+        return sysUserMapper.insert(sysUser);
+    }
 }

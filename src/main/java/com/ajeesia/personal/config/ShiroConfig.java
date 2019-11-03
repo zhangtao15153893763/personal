@@ -49,6 +49,7 @@ public class ShiroConfig {
 
         // 直接访问接口需要在这里放行
         filterMap.put("/sys/user/say","anon");
+        filterMap.put("/sys/user/setAccount","anon");
 
         filterMap.put("/**","authc");
         filterMap.put("/logout", "logout");

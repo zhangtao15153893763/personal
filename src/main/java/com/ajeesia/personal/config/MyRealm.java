@@ -16,7 +16,6 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -84,11 +83,11 @@ public class MyRealm extends AuthorizingRealm {
     }
 
     // 模拟Shiro用户加密，假设用户密码为123456
-    public static void main(String[] args){
+    public static Object  encrypt(String username,String password){
         // 用户名
-        String username = "admin";
+//        String username = "admin";
         // 用户密码
-        String password = "123456";
+//        String password = "123456";
         // 加密方式
         String hashAlgorithName = "MD5";
         // 加密次数
@@ -97,5 +96,6 @@ public class MyRealm extends AuthorizingRealm {
         Object obj = new SimpleHash(hashAlgorithName, password,
                 credentialsSalt, hashIterations);
         System.out.println(obj);
+        return obj;
     }
 }
