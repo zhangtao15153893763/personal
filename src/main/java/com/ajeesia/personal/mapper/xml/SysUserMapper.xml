@@ -20,9 +20,9 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.ajeesia.personal.entity.SysUser" >
-    insert into sys_user (user_name, password
+    insert into sys_user (id, user_name, password
       )
-    values  #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
+    values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ajeesia.personal.entity.SysUser" >

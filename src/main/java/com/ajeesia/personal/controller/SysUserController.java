@@ -73,6 +73,7 @@ public class SysUserController {
         SysUser sysUser = new SysUser();
         sysUser.setPassword(password);
         sysUser.setUserName(userName);
+        sysUser.setId(id);
         sysUserService.setAccount(sysUser);
     }
 }
