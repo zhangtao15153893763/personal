@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基于websocket的一对一聊天demo</title>
+</head>
+<body>
+    <h1 align="center">websocket聊天室</h1>
+
+    <div style="margin-left: 200px;margin-top: 20px;">
+        <label>发送者：</label><input type="text" id="sender" name="sender"/>
+        <br>
+        <label>接收者：</label><input type="text" id="receiver" name="receiver"/>
+        <br>
+        <label>发送内容：</label><input type="text" id="content" palaceholder="请输入内容"/>
+
+
+    </div>
+    <div style="margin-left: 200px;">
+        <input type="button" onclick="connect()" value="连接到websocket"/>
+    </div>
+    <div>
+
+        <div style="border: 1px solid #000;width: 800px;height: 500px;margin-left: 200px">
+        </div>
+    </div>
+    <div  style="margin-left: 200px">
+        <input type="button" value="发送" onclick="send()"/>
+    </div>
+
+
+</body>
+</html>
+<script>
+
+    var websocket;
+    var urlPrefix = "ws://" + window.location.host + "/chatRoom/"
+    var userName = document.getElementById("sender").value;
+
+    var receiver = document.getElementById("receiver").value;
+    var content = document.getElementById("content").value;
+
+
+    function connect() {
+        //判断当前浏览器是否支持WebSocket
+        if ('WebSocket' in window) {
+            userName = document.getElementById("sender").value
+            var url = urlPrefix + userName
+            websocket = new WebSocket(url)
+            websocket.onopen = function () {
+                console.log("建立ws连接")
+            }
+        } else {
+            console.log("您的浏览器不支持websocket")
+        }
+
+
+
+        websocket.onmessage = function (event) {
+            console.log((JSON.parse(event.data)))
+        }
+
+    }
+    function send() {
+        userName = document.getElementById("sender").value
+        receiver = document.getElementById("receiver").value
+        content = document.getElementById("content").value
+        var msg = {
+            senderUserName:sender,
+            toUserName:receiver,
+            message:content
+        }
+        websocket.send(JSON.stringify(msg))
+    }
+
+
+
+</script>
+<style>
+    label {
+        display: inline-block;
+        width: 100px;
+        text-align: right;
+    }
+    input {
+        width: 200px;
+        height: 30px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: 1px solid #000000;
+    }
+</style>

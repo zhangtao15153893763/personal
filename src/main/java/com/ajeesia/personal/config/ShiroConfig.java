@@ -41,18 +41,19 @@ public class ShiroConfig {
          * role：对应角色权限可访问
          **/
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/sys/user/login","anon");
-        filterMap.put("/user/index","authc");
-        filterMap.put("/vip/index","roles[vip]");
-        filterMap.put("/druid/**", "anon");
-        filterMap.put("/static/**","anon");
+//        filterMap.put("/sys/user/login","anon");
+//        filterMap.put("/user/index","authc");
+//        filterMap.put("/vip/index","roles[vip]");
+//        filterMap.put("/druid/**", "anon");
+//        filterMap.put("/static/**","anon");
 
         // 直接访问接口需要在这里放行
-        filterMap.put("/sys/user/say","anon");
-        filterMap.put("/sys/user/setAccount","anon");
+//        filterMap.put("/sys/user/say","anon");
+//        filterMap.put("/sys/user/setAccount","anon");
+        filterMap.put("/**","anon");
 
-        filterMap.put("/**","authc");
-        filterMap.put("/logout", "logout");
+//        filterMap.put("/**","authc");
+//        filterMap.put("/logout", "logout");
 
         bean.setFilterChainDefinitionMap(filterMap);
         return bean;

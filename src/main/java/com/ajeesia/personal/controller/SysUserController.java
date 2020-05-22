@@ -42,7 +42,7 @@ public class SysUserController {
 
     @RequestMapping("/toLogin")
     public String toLogin(){
-        return "login";
+            return "login";
     }
 
     @RequestMapping("/login")
