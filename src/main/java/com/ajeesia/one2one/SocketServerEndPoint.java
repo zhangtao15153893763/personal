@@ -53,7 +53,7 @@ public class SocketServerEndPoint {
         webSocketSet.put(userName,this);     //加入set中
 
         addOnlineCount();           //在线数加1
-        System.out.println("用户"+userName+"加入！当前在线人数为" + getOnlineCount());
+        System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
     }
 
     /**
@@ -63,7 +63,7 @@ public class SocketServerEndPoint {
     public synchronized void onClose() {
         webSocketSet.remove(userName);  //从set中删除
         subOnlineCount();           //在线数减1
-        System.out.println("用户"+userName+"关闭！当前在线人数为" + getOnlineCount());
+        System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
 
     }
 
