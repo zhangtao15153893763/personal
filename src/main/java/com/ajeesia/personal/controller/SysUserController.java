@@ -8,12 +8,11 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Wrapper;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,20 +38,52 @@ public class SysUserController {
     @GetMapping("/list")
     public Result sysUserList() {
         QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>();
-        Result result = new Result();
-        List<SysUser> sysUserList =  sysUserService.list();
+        Result<List<SysUser>> result = new Result();
+        queryWrapper.orderByDesc("create_time");
+        List<SysUser> sysUserList =  sysUserService.list(queryWrapper);
         if (sysUserList.size() > 0) {
             result.setCode(200);
             result.setData(sysUserList);
-            result.setMsg("暂无数据");
         }
         return result;
     }
 
+    @GetMapping("/queryById")
+    public Result queryById(Integer id) {
+        Result result = new Result();
+        SysUser sysUser = sysUserService.getById(id);
+        if (sysUser != null) {
+            result.setData(sysUser);
+            result.setCode(200);
+        }
+        return result;
+    }
 
+    @PostMapping("/add")
+    public Result add(@RequestBody SysUser sysUser) {
+        Result result = new Result();
+        sysUser.setCreateTime(new Date());
+        sysUser.setUpdateTime(new Date());
+        if (sysUserService.save(sysUser)) {
+            result.setCode(200);
+            result.setMsg("操作成功");
+        }
+        return result;
+    }
 
-    @GetMapping("/setAccount")
-    public void setAccount(){
+    @PostMapping("/editById")
+    public Result editById(@RequestBody SysUser sysUser) {
+        sysUserService.updateById(sysUser);
+        return null;
+    }
 
+    @GetMapping("/del")
+    public Result del(Integer id) {
+        Result result = new Result();
+        if (sysUserService.removeById(id)) {
+            result.setCode(200);
+            result.setMsg("操作成功");
+        }
+        return result;
     }
 }
