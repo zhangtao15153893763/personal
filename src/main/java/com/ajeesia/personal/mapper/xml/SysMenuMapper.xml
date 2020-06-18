@@ -8,51 +8,5 @@
   <sql id="Base_Column_List" >
     id, menu_name
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from sys_menu
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from sys_menu
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.ajeesia.personal.entity.SysMenu" >
-    insert into sys_menu (id, menu_name)
-    values (#{id,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ajeesia.personal.entity.SysMenu" >
-    insert into sys_menu
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="menuName != null" >
-        menu_name,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="menuName != null" >
-        #{menuName,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ajeesia.personal.entity.SysMenu" >
-    update sys_menu
-    <set >
-      <if test="menuName != null" >
-        menu_name = #{menuName,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ajeesia.personal.entity.SysMenu" >
-    update sys_menu
-    set menu_name = #{menuName,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+
 </mapper>

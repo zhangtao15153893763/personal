@@ -1,33 +1,19 @@
 package com.ajeesia.personal.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.util.Date;
+
 public class SysRoleMenu {
-    private String id;
+    @TableId
+    private Integer id;
 
-    private String roleId;
+    private Integer roleId;
 
-    private String menuId;
+    private Integer menuId;
 
-    public String getId() {
-        return id;
-    }
+    private Date createTime;
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
+    private Date updateTime;
 
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId == null ? null : roleId.trim();
-    }
-
-    public String getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(String menuId) {
-        this.menuId = menuId == null ? null : menuId.trim();
-    }
 }

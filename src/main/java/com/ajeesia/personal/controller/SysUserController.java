@@ -1,8 +1,9 @@
 package com.ajeesia.personal.controller;
 
-import com.ajeesia.personal.config.MyRealm;
+import com.ajeesia.personal.Result.Result;
 import com.ajeesia.personal.entity.SysUser;
 import com.ajeesia.personal.service.SysUserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.Wrapper;
+import java.util.List;
 
 /**
  * @Description: java类作用描述
@@ -27,53 +31,28 @@ public class SysUserController {
 
     @GetMapping("/say")
     public String say(){
+        SysUser sysUser = sysUserService.getById(1);
+        System.err.println(sysUser);
         return "hello world";
     }
 
-    @GetMapping("/selectByPrimaryKey")
-    public SysUser selectByPrimaryKey(@RequestParam("id") String id){
-        return sysUserService.selectByPrimaryKey(id);
-    }
-
-    @GetMapping("/queryById")
-    public String queryById(String id){
-        return sysUserService.queryById(id);
-    }
-
-    @RequestMapping("/toLogin")
-    public String toLogin(){
-            return "login";
-    }
-
-    @RequestMapping("/login")
-    public String login(
-            @RequestParam("username")String username,@RequestParam("password")String password){
-        // 1、获取subject
-        Subject subject = SecurityUtils.getSubject();
-        // 2、封装用户数据
-        UsernamePasswordToken token = new UsernamePasswordToken(username,password);
-        // 3、执行登录方法
-        try{
-            subject.login(token);
-            return "登录成功";
-//            return "redirect:/main";
-        }catch (Exception e){
-            e.printStackTrace();
+    @GetMapping("/list")
+    public Result sysUserList() {
+        QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>();
+        Result result = new Result();
+        List<SysUser> sysUserList =  sysUserService.list();
+        if (sysUserList.size() > 0) {
+            result.setCode(200);
+            result.setData(sysUserList);
+            result.setMsg("暂无数据");
         }
-        return "aa";
-//        return "login";
+        return result;
     }
+
+
 
     @GetMapping("/setAccount")
     public void setAccount(){
-        String id = "fadfhbashfabsfasfsa";
-        String userName = "abc";
-        String password = "123456";
-        MyRealm.encrypt(userName,password);
-        SysUser sysUser = new SysUser();
-        sysUser.setPassword(password);
-        sysUser.setUserName(userName);
-        sysUser.setId(id);
-        sysUserService.setAccount(sysUser);
+
     }
 }

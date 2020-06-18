@@ -13,22 +13,17 @@
         <label>接收者：</label><input type="text" id="receiver" name="receiver"/>
         <br>
         <label>发送内容：</label><input type="text" id="content" palaceholder="请输入内容"/>
-
-
     </div>
     <div style="margin-left: 200px;">
         <input type="button" onclick="connect()" value="连接到websocket"/>
     </div>
     <div>
-
-        <div style="border: 1px solid #000;width: 800px;height: 500px;margin-left: 200px">
+        <div id="contents" style="border: 1px solid #000;width: 800px;height: 500px;margin-left: 200px">
         </div>
     </div>
     <div  style="margin-left: 200px">
         <input type="button" value="发送" onclick="send()"/>
     </div>
-
-
 </body>
 </html>
 <script>
@@ -39,6 +34,10 @@
 
     var receiver = document.getElementById("receiver").value;
     var content = document.getElementById("content").value;
+
+    var msgContent = new Array();
+    var message = new Array();
+
 
 
     function connect() {
@@ -53,24 +52,48 @@
         } else {
             console.log("您的浏览器不支持websocket")
         }
-
-
-
         websocket.onmessage = function (event) {
             console.log((JSON.parse(event.data)))
-        }
+            var obj = JSON.parse(event.data)
+            msgContent.push(obj)
+            console.log("msgContent",msgContent)
 
+            message = []
+            message = msgContent
+            var contentdiv = document.getElementById("contents")
+            contentdiv.innerHTML = ""
+
+            for (var i=0;i<message.length;i++) {
+                contentdiv.innerHTML += "sender:"+message[i].senderUserName+"<br>" +
+                    "content:<br>"+message[i].message+"<br>"
+            }
+
+        }
     }
     function send() {
         userName = document.getElementById("sender").value
         receiver = document.getElementById("receiver").value
         content = document.getElementById("content").value
         var msg = {
-            senderUserName:sender,
+            senderUserName:userName,
             toUserName:receiver,
             message:content
         }
+        msgContent.push(msg)
+        console.log("msgContent",msgContent)
+        message = []
+        message = msgContent
+        var contentdiv = document.getElementById("contents")
+        contentdiv.innerHTML = ""
+
+        for (var i=0;i<message.length;i++) {
+            contentdiv.innerHTML += "sender:"+message[i].senderUserName+"<br>" +
+                "content:<br>"+message[i].message+"<br>"
+        }
+
         websocket.send(JSON.stringify(msg))
+
+
     }
 
 

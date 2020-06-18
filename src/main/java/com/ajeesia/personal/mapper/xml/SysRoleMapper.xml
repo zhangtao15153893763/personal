@@ -8,51 +8,5 @@
   <sql id="Base_Column_List" >
     id, role_name
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from sys_role
-    where id = #{id,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from sys_role
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.ajeesia.personal.entity.SysRole" >
-    insert into sys_role (id, role_name)
-    values (#{id,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ajeesia.personal.entity.SysRole" >
-    insert into sys_role
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="roleName != null" >
-        role_name,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="roleName != null" >
-        #{roleName,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ajeesia.personal.entity.SysRole" >
-    update sys_role
-    <set >
-      <if test="roleName != null" >
-        role_name = #{roleName,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ajeesia.personal.entity.SysRole" >
-    update sys_role
-    set role_name = #{roleName,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+
 </mapper>
