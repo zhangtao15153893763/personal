@@ -69,22 +69,4 @@ public class MyRealm extends AuthorizingRealm {
         return simpleAuthenticationInfo;
     }
 
-    private SysUser getUserByUserName(String username){
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("user_name",username);
-        SysUser sysUser = null;
-        try {
-            sysUser = sysUserService.getOne(queryWrapper);
-        } catch (Exception e) {
-        }
-//        if (sysUser == null || "".equals(sysUser)) {
-//            return null; // 不存在该用户
-//        }
-//
-//        SysUser sysUser1 = new SysUser();
-//        sysUser1.setUserName(sysUser.getUserName());
-
-
-        return sysUser;
-    }
 }
