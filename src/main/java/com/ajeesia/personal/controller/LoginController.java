@@ -45,7 +45,7 @@ public class LoginController {
             @RequestParam("username")String username, @RequestParam("password")String password, Model model){
         // 1、获取subject
         Subject subject = SecurityUtils.getSubject();
-//        // 2、封装用户数据
+        // 2、封装用户数据
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
         // 3、执行登录方法
         try {
