@@ -48,10 +48,11 @@ public class LoginController {
         } catch (UnknownAccountException uae) {
             // 账号不存在
             model.addAttribute("msg","账号不存在");
-        } catch (AuthenticationException ae) {
-            // 状态不正常
-            model.addAttribute("msg","状态不正常");
         }
+//        catch (AuthenticationException ae) {
+//            // 状态不正常
+//            model.addAttribute("msg","状态不正常");
+//        }
 
         if (subject.isAuthenticated()) {
             // 认证成功

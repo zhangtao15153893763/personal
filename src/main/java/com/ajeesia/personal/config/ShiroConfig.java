@@ -25,10 +25,10 @@ public class ShiroConfig {
      * @return
      */
     @Bean
-    public ShiroFilterFactoryBean webFilter() {
+    public ShiroFilterFactoryBean webFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //设置securityManager
-        shiroFilterFactoryBean.setSecurityManager(securityManager());
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         //配置拦截链 使用LinkedHashMap,因为LinkedHashMap是有序的，shiro会根据添加的顺序进行拦截
         // Map<K,V> K指的是拦截的url V值的是该url是否拦截
@@ -50,12 +50,20 @@ public class ShiroConfig {
      * SecurityManager安全管理器需要到realm中去验证认证信息，所以给SecurityManager设置Realm。
      * @return
      */
-    public SecurityManager securityManager() {
+    @Bean
+    public SecurityManager securityManager(MyRealm myRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //将自定义的realm交给SecurityManager管理
-        securityManager.setRealm(new MyRealm());
+        securityManager.setRealm(myRealm);
         return securityManager;
     }
+
+    @Bean
+    public MyRealm myRealm() {
+        MyRealm myRealm = new MyRealm();
+        return myRealm;
+    }
+
 
 
 }

@@ -7,5 +7,10 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface SysUserMapper extends BaseMapper<SysUser> {
-
+    /**
+     * 根据用户名查找用户
+     * @param userName
+     * @return
+     */
+    SysUser getUserByUserName(String userName);
 }

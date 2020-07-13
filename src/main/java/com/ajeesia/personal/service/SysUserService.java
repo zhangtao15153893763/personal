@@ -18,4 +18,9 @@ public class SysUserService extends ServiceImpl<SysUserMapper,SysUser> {
     @Autowired
     private SysUserMapper sysUserMapper;
 
+    public SysUser getUserByUserName(String username) {
+        return sysUserMapper.getUserByUserName(username);
+    }
+
+
 }

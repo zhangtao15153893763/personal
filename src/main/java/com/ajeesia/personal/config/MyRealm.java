@@ -38,7 +38,7 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        return null;
+      return new SimpleAuthorizationInfo();
     }
 
     /**
@@ -53,7 +53,9 @@ public class MyRealm extends AuthorizingRealm {
         // 1.获取用户输入的账号
         String username = (String)token.getPrincipal();
         // 2.通过username从数据库中查找到user实体
-        SysUser sysUser = getUserByUserName(username);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("user_name",username);
+        SysUser sysUser = sysUserService.getOne(queryWrapper);
         if(sysUser == null){
             return null;
         }
@@ -70,7 +72,19 @@ public class MyRealm extends AuthorizingRealm {
     private SysUser getUserByUserName(String username){
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("user_name",username);
-        SysUser sysUser = sysUserService.getOne(queryWrapper);
+        SysUser sysUser = null;
+        try {
+            sysUser = sysUserService.getOne(queryWrapper);
+        } catch (Exception e) {
+        }
+//        if (sysUser == null || "".equals(sysUser)) {
+//            return null; // 不存在该用户
+//        }
+//
+//        SysUser sysUser1 = new SysUser();
+//        sysUser1.setUserName(sysUser.getUserName());
+
+
         return sysUser;
     }
 }
