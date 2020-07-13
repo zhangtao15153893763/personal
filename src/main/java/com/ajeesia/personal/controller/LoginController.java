@@ -1,16 +1,21 @@
 package com.ajeesia.personal.controller;
 
 import com.ajeesia.personal.Result.Result;
+import com.ajeesia.personal.entity.SysUser;
+import com.ajeesia.personal.service.SysUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * @Description: java类作用描述
@@ -20,6 +25,10 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class LoginController {
+
+    @Resource
+    private SysUserService sysUserService;
+
     @RequestMapping("/test")
     public String test(){
 //        System.out.println("hello world");
@@ -48,11 +57,10 @@ public class LoginController {
         } catch (UnknownAccountException uae) {
             // 账号不存在
             model.addAttribute("msg","账号不存在");
+        } catch (AuthenticationException ae) {
+            // 状态不正常
+            model.addAttribute("msg","状态不正常");
         }
-//        catch (AuthenticationException ae) {
-//            // 状态不正常
-//            model.addAttribute("msg","状态不正常");
-//        }
 
         if (subject.isAuthenticated()) {
             // 认证成功
@@ -63,5 +71,31 @@ public class LoginController {
             token.clear();
             return "login";
         }
+    }
+
+    @RequestMapping("/regist")
+    public String regist(){
+//        System.out.println("hello world");
+        return "regist";
+    }
+
+
+    /**
+     * 添加用户
+     * @param sysUser
+     * @return
+     */
+    @PostMapping("/add")
+    @ResponseBody
+    public Result<String> add(SysUser sysUser) {
+        Result result = new Result();
+        boolean isSuccess =  sysUserService.save(sysUser);
+        if (isSuccess) { // 成功
+            result.setMsg("success");
+            result.setCode(200);
+            return result;
+        }
+        result.setCode(500);
+        return result;
     }
 }
