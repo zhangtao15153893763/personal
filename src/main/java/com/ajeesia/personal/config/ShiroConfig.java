@@ -37,6 +37,8 @@ public class ShiroConfig {
         //authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问,先配置anon再配置authc。
         filterChainMap.put("/toLogin","anon");
         filterChainMap.put("/login","anon");
+        filterChainMap.put("/regist","anon");
+        filterChainMap.put("/add","anon");
         filterChainMap.put("/**", "authc");
 
         //设置拦截请求后跳转的URL.
@@ -59,9 +61,27 @@ public class ShiroConfig {
     }
 
     @Bean
-    public MyRealm myRealm() {
+    public MyRealm myRealm(HashedCredentialsMatcher  hashedCredentialsMatcher) {
         MyRealm myRealm = new MyRealm();
+        myRealm.setCredentialsMatcher(hashedCredentialsMatcher);
         return myRealm;
+    }
+
+
+    /**
+     * 密码匹配凭证管理器
+     *
+     * @return
+     */
+    @Bean(name = "hashedCredentialsMatcher")
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher hashedCredentialsMatcher =
+                new HashedCredentialsMatcher();
+        // 采用MD5方式加密
+        hashedCredentialsMatcher.setHashAlgorithmName("MD5");
+        // 设置加密次数
+        hashedCredentialsMatcher.setHashIterations(1024);
+        return hashedCredentialsMatcher;
     }
 
 

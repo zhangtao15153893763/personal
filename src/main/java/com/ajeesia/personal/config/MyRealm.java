@@ -59,12 +59,16 @@ public class MyRealm extends AuthorizingRealm {
         if(sysUser == null){
             return null;
         }
+        // 获取盐值（根据用户名生成）
+        ByteSource salt = ByteSource.Util.bytes(username);
+        String password = sysUser.getPassword();
+
         // 3.通过SimpleAuthenticationInfo做身份处理
         // 第一个参数是从数据库中获取SysUser对象
         // 第二个参数是数据库获取的密码
         // 第三个参数是当前Realm的名称
         SimpleAuthenticationInfo simpleAuthenticationInfo =
-                new SimpleAuthenticationInfo(sysUser,sysUser.getPassword(),getName());
+                new SimpleAuthenticationInfo(sysUser,password,salt,getName());
         // 4.返回身份处理对象
         return simpleAuthenticationInfo;
     }
